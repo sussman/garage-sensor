@@ -2,7 +2,7 @@
 
 # Basic server to listen for messages from arduino garage sensor.
 
-import socket, logging, smtplib, datetime
+import socket, logging, smtplib, datetime, time
 
 HOST = '127.0.0.1'  # use public IP address here.
 PORT = 51729
@@ -63,5 +63,7 @@ def send_email(msg):
 
 while 1:
   connection = startSocket()
-  os.sleep(5)
   receiveLoop(connection)
+  print "Connection lost.  Restarting..."
+  time.sleep(10)
+
