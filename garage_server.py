@@ -52,13 +52,16 @@ def onMessage(data):
 
 def send_email(msg):
   logging.debug('Sending emails.')
-  for address in emails:
-    #print 'I YAM SENDING MAIL TO ' + address + ': ' + msg
-    #server = smtplib.SMTP(smtp_server)
-    #server.sendmail("sussman@red-bean.com", address, msg)
-    #server.quit()
+  content = 'From: sussman@red-bean.com\n'
+  content += 'To: %s\n' % ','.join(emails)
+  content += 'Subject: garage status\n\n'
+  msg = content + msg
+  server = smtplib.SMTP(smtp_server)
+  server.sendmail("sussman@red-bean.com", emails, msg)
+  server.quit()
 
 
 while 1:
   connection = startSocket()
+  os.sleep(5)
   receiveLoop(connection)
